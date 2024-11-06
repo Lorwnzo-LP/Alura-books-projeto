@@ -1,16 +1,19 @@
-import { exibirOsLivrosNaTela } from './metodoForEach.js';
-import { aplicarDesconto } from './metodoMap.js';
-
+import { exibirLivrosNaTela } from "./metodoForeach.js";
+import { botoes, filtrar } from "./metodoFilter.js";
+import { botao, livrosOrdenados } from "./metodoSort.js";
 
 export let livros = [];
-const endpoitDaAPI = 'https://guilhermeonrails.github.io/casadocodigo/livros.json';
+const endpoitApi = 'https://guilhermeonrails.github.io/casadocodigo/livros.json';
 
+getEndpointDaAPI();
+async function getEndpointDaAPI(){
+        const res = await fetch(endpoitApi);
+        livros = await res.json();
+        console.table(livros);
+        exibirLivrosNaTela(livros)
+    }
 
-
-getBuscarLivrosDaAPI();
-    async function getBuscarLivrosDaAPI(){
-    const res = await fetch(endpoitDaAPI);
-    livros = await res.json();
-    exibirOsLivrosNaTela(livros);
-}
-
+botoes.forEach(btn => btn.addEventListener('click',filtrar));
+botao.addEventListener('click',() => {
+    livrosOrdenados();
+});

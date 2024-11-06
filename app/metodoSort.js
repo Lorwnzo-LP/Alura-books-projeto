@@ -1,19 +1,11 @@
-import { exibirOsLivrosNaTela } from "./metodoForEach.js";
-import { aplicarDesconto } from "./metodoMap.js";
 import { livros } from "./main.js";
+import { exibirLivrosNaTela } from "./metodoForeach.js";
 
-const botao = document.getElementById("btnOrdenarPorPreco");
-
-botao.addEventListener("click", () => {
-    livrosOrdenados();
-})
+export const botao = document.getElementById('btnOrdenarPorPreco')
 
 export function livrosOrdenados(){
-    let livrosOrdenados = livros.sort((a, b) => {
-        return a.preco - b.preco;
+    let ordenados = livros.sort((a,b) => {
+        return a.preco - b.preco
     })
-
-    exibirOsLivrosNaTela(livrosOrdenados);
-    
-
-}
+    exibirLivrosNaTela(ordenados);
+};

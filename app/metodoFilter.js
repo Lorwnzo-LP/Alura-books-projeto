@@ -1,39 +1,30 @@
-import { exibirOsLivrosNaTela } from "./metodoForEach.js";
 import { livros } from "./main.js";
-import { elementoComValorTotalDeLivrosDisponiveis } from "./metodoForEach.js";
-import { calcularValorTotalDeLivrosDisponiveis } from "./metodoReduce.js";
+import { exibirLivrosNaTela } from "./metodoForeach.js";
+import { calcularValorTotal, exibirValorTotal } from "./metodoReduce.js";
 
+export const botoes = document.querySelectorAll(".btn");
 
-const botoes = document.querySelectorAll('.btn');
-botoes.forEach(btn => btn.addEventListener('click', livrosFiltrados))
-
-export function livrosFiltrados(){
+export function filtrar(){
     const elementoBtn = document.getElementById(this.id)
     const categoria = elementoBtn.value;
-    let filtrados = categoria == 'disponivel' ? filtrarPorDisponibilidade() : filtrarPorCategoria(categoria);
-    exibirOsLivrosNaTela(filtrados);
-    if (categoria == 'disponivel'){
-        const valorTotal = calcularValorTotalDeLivrosDisponiveis(filtrados);
-        exibirValorTotalDosLivrosDisponiveisNaTela(valorTotal);
+    let filtrados = categoria == 'disponivel' ? filtrarDisponiveis() : filtrarCategorias(categoria)
+    exibirLivrosNaTela(filtrados); 
+    exibirSomaDeValores(categoria, filtrados)
+}
+
+function exibirSomaDeValores(categoria, filtrados) {
+    if (categoria == 'disponivel') {
+        let precoTotal = calcularValorTotal(filtrados);
+        exibirValorTotal(precoTotal);
     }
 }
 
-function filtrarPorCategoria(categoria) {
+function filtrarCategorias(categoria) {
     return livros.filter(livros => { return livros.categoria == categoria; });
 }
 
-function filtrarPorDisponibilidade() {
-    return livros.filter(livro => livro.quantidade > 0);
+function filtrarDisponiveis() {
+    return livros.filter(livros => { return livros.quantidade > 0; });
+    
 }
-
-function exibirValorTotalDosLivrosDisponiveisNaTela(valor){
-    elementoComValorTotalDeLivrosDisponiveis.innerHTML = `
-    <div class="livros__disponiveis">
-    <p>Todos os livros disponíveis por R$ <span id="valor">${valor}</span></p>
-    </div>
-    `
-}
-
-
-
 

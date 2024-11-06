@@ -1,38 +1,26 @@
 import { aplicarDesconto } from "./metodoMap.js";
+import { exibirValor } from "./metodoReduce.js";
 
-const elementoParaInserirLivros = document.getElementById('livros');
-export const elementoComValorTotalDeLivrosDisponiveis = document.getElementById('valor_total_livros_disponiveis')
+const localLivros = document.getElementById("livros");
 
-export function exibirOsLivrosNaTela(listaDeLivros){
-    let listaComDesconto = aplicarDesconto(listaDeLivros);
-    elementoParaInserirLivros.innerHTML = ''
-    elementoComValorTotalDeLivrosDisponiveis.innerHTML = ''
-    listaComDesconto.forEach(livro => {
-        
-
-        let disponibilidade = livro.quantidade > 0 ? 'livro__imagens' : 'livro__imagens indisponivel'
-        elementoParaInserirLivros.innerHTML += `
+export function exibirLivrosNaTela(listaLivros){
+    exibirValor.innerHTML = '';
+    let livrosComDesconto = aplicarDesconto(listaLivros);
+    localLivros.innerHTML = '';
+    livrosComDesconto.forEach(livro => {
+        let disponivel = livro.quantidade > 0? '' : 'indisponivel';
+        localLivros.innerHTML = localLivros.innerHTML + `
         <div class="livro">
-            <img class="${disponibilidade}" src="${livro.imagem}" alt="${livro.alt}" />
-            <h2 class="livro__titulo">
-                ${livro.titulo}
-            </h2>
-            <p class="livro__descricao">${livro.autor}</p>
-            <p class="livro__preco" id="preco">R$${livro.preco.toFixed(2)}</p>
-            <div class="tags">
-                <span class="tag">${livro.categoria}</span>
-            </div>
-    </div>
-`
-    })
-
-}
-
-function verificarDisponibilidadeDoLivro(livro){
-    if (livro.quantidade > 0){
-        return 'livro__imagens'
-    }
-    else {
-        return 'livro__imagens indisponivel'
-    }
+          <img class="livro__imagens ${disponivel}" src="${livro.imagem}" alt="${livro.alt}" />
+          <h2 class="livro__titulo">
+            ${livro.titulo}
+          </h2>
+          <p class="livro__descricao">${livro.autor}</p>
+          <p class="livro__preco" id="preco">R$${livro.preco.toFixed(2)}</p>
+          <div class="tags">
+            <span class="tag">${livro.categoria}</span>
+          </div>
+        </div>
+        `
+    });
 }
