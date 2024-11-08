@@ -1,19 +1,28 @@
-import { exibirLivrosNaTela } from "./metodoForeach.js";
-import { botoes, filtrar } from "./metodoFilter.js";
-import { botao, livrosOrdenados } from "./metodoSort.js";
+import { showBooksOnScreen } from "./foreachMethod.js";
+import { buttons, filter } from "./filterMethod.js"
+import { orderList } from "./sortMethod.js";
 
-export let livros = [];
-const endpoitApi = 'https://guilhermeonrails.github.io/casadocodigo/livros.json';
+const endpointFromApi = 'https://guilhermeonrails.github.io/casadocodigo/livros.json';
+const availableButton = document.getElementById('btnOrdenarPorPreco');
+const menuButton = document.getElementById('btnVoltarMenuPrincipal')
 
-getEndpointDaAPI();
-async function getEndpointDaAPI(){
-        const res = await fetch(endpoitApi);
-        livros = await res.json();
-        console.table(livros);
-        exibirLivrosNaTela(livros)
-    }
 
-botoes.forEach(btn => btn.addEventListener('click',filtrar));
-botao.addEventListener('click',() => {
-    livrosOrdenados();
-});
+export let books = [];
+
+getEndpointFromApi();
+async function getEndpointFromApi(){
+    const res = await fetch(endpointFromApi);
+    books = await res.json();
+    showBooksOnScreen(books);
+}
+
+buttons.forEach(btn => btn.addEventListener('click', filter));
+
+availableButton.addEventListener("click", orderList);
+
+menuButton.addEventListener("click", returnFirstList);
+
+function returnFirstList(){
+    let firstList = getEndpointFromApi();
+    showBooksOnScreen(firstList);
+};
